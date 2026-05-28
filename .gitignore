@@ -24,7 +24,7 @@ pip-wheel-metadata/
 # ================================
 # ML / DATA ARTIFACTS
 # ================================
-*.keras
+outputs/*.keras
 *.h5
 *.pt
 *.onnx
@@ -32,8 +32,6 @@ pip-wheel-metadata/
 *.joblib
 
 # Training outputs / visualizations
-training_history.png
-confusion_matrix.png
 runs/
 predictions/
 predictions2/
