@@ -10,7 +10,7 @@ __pycache__/
 *.egg
 .env
 .env.*
-venv/
+ISLenv/
 isl_env/
 .venv/
 pip-wheel-metadata/

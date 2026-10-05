@@ -407,7 +407,6 @@ def predict_landmarks(landmark_seq):
         ],
     }
 
-
 # ============================================================================
 # Routes
 # ============================================================================
@@ -544,7 +543,6 @@ def get_signs():
 def serve_video(filename):
     from flask import send_from_directory
     return send_from_directory(DATASET_PATH, filename)
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
