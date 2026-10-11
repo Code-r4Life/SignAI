@@ -1,6 +1,6 @@
-# ✋ SignAI — Real-Time Indian Sign Language Recognition & Translation
-
 <div align="center">
+
+# ✋ SignAI — Real-Time Indian Sign Language Recognition & Translation
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-orange?style=for-the-badge&logo=tensorflow)
@@ -13,7 +13,7 @@
 
 **SignAI** is an AI-powered Indian Sign Language (ISL) recognition and transcription project designed to help signers communicate with people who do not know sign language. It combines webcam-based landmark extraction, temporal gesture recognition, fingerspelling, sentence reconstruction, text output, speech, and browser-based video-call integration.
 
-[Repository](https://github.com/Code-r4Life/SignAI) · [Teammate's Real-Time Translator](https://github.com/satya-py/Sign-Language-Translation-Real-Time-)
+[Repository](https://github.com/Code-r4Life/SignAI) · [Real-Time Translator](https://github.com/satya-py/Sign-Language-Translation-Real-Time-)
 
 </div>
 
@@ -152,8 +152,8 @@ At a high level, the application consists of a visual recognition pipeline, a la
                             │
                             ▼
                  ┌──────────────────────┐
-                 │ MediaPipe Holistic   │
-                 │ Hands + Pose         │
+                 │  MediaPipe Holistic  │
+                 │     Hands + Pose     │
                  └──────────┬───────────┘
                             │
                             ▼
@@ -165,8 +165,8 @@ At a high level, the application consists of a visual recognition pipeline, a la
                 ┌───────────┴────────────┐
                 ▼                        ▼
       ┌──────────────────┐    ┌──────────────────┐
-      │ Word/Sign Model  │    │ Fingerspelling   │
-      │ Temporal Model   │    │ MLP Classifier   │
+      │ Word/Sign Model  │    │  Fingerspelling  │
+      │ Temporal Model   │    │  MLP Classifier  │
       └─────────┬────────┘    └─────────┬────────┘
                 │                       │
                 └───────────┬───────────┘
@@ -177,16 +177,28 @@ At a high level, the application consists of a visual recognition pipeline, a la
                             ▼
                  ┌──────────────────────┐
                  │ Sentence Construction│
-                 │ Grammar / LLM fallback│
+                 │Grammar / LLM fallback│
                  └──────────┬───────────┘
                             │
               ┌─────────────┼─────────────┐
               ▼             ▼             ▼
-           Text UI      Text-to-Speech  Call Chat
-                                        Integration
+           Text UI    Text-to-Speech   Call Chat
+                                      Integration
 ```
 
 This diagram represents the **overall project concept**. The exact inference route differs by implementation: for example, the uploaded GCN–BiLSTM script performs windowed classification, while the linked SignNet application includes a continuous sign-spotting and sentence-assembly pipeline.
+
+### 🖼️ Architecture Diagram
+
+The diagram below summarizes the project's main workflow, from webcam frames and MediaPipe landmark extraction to sign/letter recognition, sentence construction, and text-to-speech output.
+
+It illustrates the **overall system concept**. Individual implementations use different recognition pipelines: the GCN–BiLSTM model in this repository is distinct from the SignNet CNN–Transformer model documented in the linked real-time translator.
+
+<div align="center">
+
+<img src="./outputs/Arch.png" alt="SignAI system architecture showing landmark extraction, word and letter recognition, sentence construction, text output, and speech output" width="100%"/>
+
+</div>
 
 ---
 
@@ -311,7 +323,7 @@ Word-level vocabularies cannot cover every name, address, abbreviation, or unfam
 
 The described fingerspelling classifier:
 
-- Uses webcam-collected landmark feature files.
+- Uses webcam-collected landmark feature files `MP_Data/`.
 - Uses a lightweight multilayer perceptron (MLP) with dense/linear layers.
 - Classifies 36 classes: 26 alphabet letters and 10 digits.
 - Is designed for low-latency inference without relying on a large vision-language model.
@@ -464,18 +476,18 @@ The following is a high-level map of the repository and its main visible compone
 SignAI/
 │
 ├── backend/
-│   ├── app.py                         # Flask API, landmark processing and GCN–BiLSTM inference
-│   ├── requirements.txt               # Backend-specific Python dependencies
-│   └── runtime.txt                    # Runtime configuration
+│   ├── app.py                          # Flask API, landmark processing and GCN–BiLSTM inference
+│   ├── requirements.txt                # Backend-specific Python dependencies
+│   └── runtime.txt                     # Runtime configuration
 │
 ├── frontend/
 │   ├── src/
-│   │   ├── components/                # Reusable UI components
+│   │   ├── components/                 # Reusable UI components
 │   │   ├── pages/
-│   │   │   ├── Home.jsx               # Landing page
-│   │   │   ├── About.jsx              # Project information
+│   │   │   ├── Home.jsx                # Landing page
+│   │   │   ├── About.jsx               # Project information
 │   │   │   ├── Detection.jsx           # Sign detection interface
-│   │   │   └── Signs.jsx                # Supported signs information
+│   │   │   └── Signs.jsx               # Supported signs information
 │   │   ├── App.jsx
 │   │   └── main.jsx
 │   ├── package.json
@@ -483,21 +495,19 @@ SignAI/
 │   └── tailwind.config.js
 │
 ├── outputs/
-│   ├── classification_report.png      # Classification metrics visualization
-│   ├── confusion_matrix.png           # Confusion matrix
+│   ├── classification_report.png       # Classification metrics visualization
+│   ├── confusion_matrix.png            # Confusion matrix
 │   ├── training_history.png            # Training and validation curves
-│   ├── processed_landmarks.pkl         # Class metadata / processed data artifact, if present
-│   └── model checkpoints               # Exact checkpoint names depend on the current run
+│   └── Arch.png                        # End-to-end SignAI architecture and workflow
 │
-├── MP_Data/                            # Collected/preprocessed examples, if present
-├── Logs/                               # Logs, if present
+├── MP_Data/                            # Webcam-collected .npy feature files for fingerspelling
+├── Logs/                               # Logs
 ├── Real-Time-ISL/                      # Git submodule: teammate's real-time translator
 ├── ISL_transcription.ipynb             # Recognition/training experiments
-├── Action Detection Refined.ipynb      # Fingerspelling/action-model notebook
+├── Action Detection Refined.ipynb      # Trains the fingerspelling model using MP_Data/
 ├── live_detection.py                   # Standalone webcam GCN–BiLSTM inference
 ├── requirements.txt                    # Root Python environment snapshot
-├── ISL_Report.pdf                      # Project report
-├── INCLUDE ISL.pdf                     # Dataset/reference document
+├── INCLUDE ISL.pdf                     # INCLUDE research paper
 └── README.md
 ```
 
@@ -734,13 +744,11 @@ The main project includes original experimentation, model code, and application 
 
 ## 👥 Team
 
-**Team Byte_Coders**
+**Team SignAI**
 
 - **Shinjan Saha** — Team Lead
 - **Satyabrata Das Adhikari**
-- **Sayan Sk**
-
-The project material supplied for the hackathon also lists **Soumyadip Manna** and **Srijan Sarkar** as team members. Team composition may differ by project phase or submission; update this section to reflect the contributors to the current repository.
+- **Soumyadip Manna**
 
 ---
 
