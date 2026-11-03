@@ -750,8 +750,8 @@ The project includes original experimentation, model code, and application compo
 
 **Team SignAI**
 
-- **Shinjan Saha** — Team Lead · GCN–BiLSTM research, architecture design and diagrams for the deployed system, webcam dataset collection, demo video production and editing
-- **Satyabrata Das Adhikari** — Real-Time translator (SignNet), deployment, and Chrome extension ([repository](https://github.com/satya-py/Sign-Language-Translation-Real-Time-))
+- **Shinjan Saha** — Team Lead
+- **Satyabrata Das Adhikari**
 - **Soumyadip Manna**
 
 ---
